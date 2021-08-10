@@ -1,8 +1,7 @@
-import 'reflect-metadata';
-import fastify, { FastifyInstance, FastifySchemaCompiler } from 'fastify';
-import * as Joi from '@hapi/joi';
-import routes from './router';
-import swagger, { options } from './swagger';
+import fastify, { FastifyInstance } from 'fastify';
+import { app } from './app';
+
+import './core/ts-to-ajv';
 
 class Server {
   private readonly port: number = 3000;
@@ -10,12 +9,24 @@ class Server {
   private readonly server: FastifyInstance;
 
   constructor(server: Function) {
-    this.server = server({ logger: false });
+    this.server = server({
+      logger: false,
+      ajv: {
+        customOptions: {
+          removeAdditional: false,
+          useDefaults: true,
+          coerceTypes: true,
+          allErrors: true,
+          strictTypes: true,
+          nullable: true,
+          strictRequired: true
+        }
+      }
+    });
   }
 
   start() {
-    this.server.register(swagger, options);
-    this.server.register(routes, { prefix: '/api/v1' });
+    this.server.register(app);
     this.server.listen(this.port).catch(console.error);
   }
 }

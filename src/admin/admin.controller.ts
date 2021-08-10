@@ -1,8 +1,7 @@
 import autoBind = require('auto-bind');
-import { Controller, Get, Post, Schema } from '../../core/decorators';
-import { getOne, createOne } from './admin.schema';
+import { Controller, Get, Post, Schema } from '../../core/auto-route-module';
+import { getOne } from './admin.schema';
 import AdminService from './admin.service';
-import CreateAdminDTO from './dto/create-admin.dto';
 import GetOneAdminDTO from './dto/get-one-admin.dto';
 
 @Controller('/admin')

@@ -1,5 +1,4 @@
 // import GetOneAdminDTO from './dto/create-admin.dto';
-
 import GetOneAdminDTO from './dto/get-one-admin.dto';
 
 interface IAdmin {
